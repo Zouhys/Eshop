@@ -1,17 +1,19 @@
+// src/CartPage.tsx
 import React, { useContext } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { StoreContext } from './StoreContext';
+import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import { StoreContext, Product } from './StoreContext';
 
 const CartPage = () => {
-  const { cart } = useContext(StoreContext);
+  const { cart, removeFromCart } = useContext(StoreContext);
 
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: { item: Product }) => (
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>
         {item.name} – {item.price} Kč
       </Text>
+      <Button title="Odstranit" onPress={() => removeFromCart(item)} />
     </View>
   );
 
@@ -36,9 +38,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f9f9f9',
     borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   itemText: { fontSize: 18 },
-  total: { fontSize: 20, fontWeight: 'bold', marginTop: 20 },
+  total: { fontSize: 20, fontWeight: 'bold', marginTop: 20 }
 });
 
 export default CartPage;
