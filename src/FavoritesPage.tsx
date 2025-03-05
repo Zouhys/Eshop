@@ -1,13 +1,15 @@
+// src/FavoritesPage.tsx
 import React, { useContext } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { StoreContext } from './StoreContext';
+import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import { StoreContext, Product } from './StoreContext';
 
 const FavoritesPage = () => {
-  const { favorites } = useContext(StoreContext);
+  const { favorites, removeFromFavorites } = useContext(StoreContext);
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: { item: Product }) => (
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>{item.name}</Text>
+      <Button title="Odstranit" onPress={() => removeFromFavorites(item)} />
     </View>
   );
 
@@ -31,8 +33,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f9f9f9',
     borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  itemText: { fontSize: 18 },
+  itemText: { fontSize: 18 }
 });
 
 export default FavoritesPage;

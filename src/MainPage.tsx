@@ -1,16 +1,35 @@
+// src/MainPage.tsx
 import React, { useContext } from 'react';
-import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Button, StyleSheet, Alert } from 'react-native';
 import { StoreContext, Product } from './StoreContext';
 
-// Ukázková data produktů
 const products: Product[] = [
-  { id: 1, name: 'Smartphone', price: 299 },
-  { id: 2, name: 'Laptop', price: 999 },
-  { id: 3, name: 'Tablet', price: 499 },
+  { id: 1, name: 'iphone', price: 2990 },
+  { id: 2, name: 'Laptop', price: 9990 },
+  { id: 3, name: 'Tablet', price: 4990 },
+  { id: 4, name: 'myčka', price: 49900 },
+  { id: 5, name: 'mikrovlnka', price: 50000 },
+  { id: 6, name: 'pán prstenů DVD', price: 100000 },
+  { id: 7, name: 'šachovnice', price: 1 },
+  { id: 8, name: 'tigeříček', price: 18 },
+  { id: 9, name: 'specialitka ze skřínky', price: 180 },
+  { id: 10, name: 'specialitka z penálu', price: 20 },
+
 ];
+
 
 const MainPage = () => {
   const { addToCart, addToFavorites } = useContext(StoreContext);
+
+  const handleAddToCart = (item: Product) => {
+    addToCart(item);
+    Alert.alert('Přidáno do košíku', `${item.name} bylo přidáno do košíku.`);
+  };
+
+  const handleAddToFavorites = (item: Product) => {
+    addToFavorites(item);
+    Alert.alert('Přidáno do oblíbených', `${item.name} bylo přidáno do oblíbených.`);
+  };
 
   const renderItem = ({ item }: { item: Product }) => (
     <View style={styles.itemContainer}>
@@ -18,8 +37,8 @@ const MainPage = () => {
         {item.name} – {item.price} Kč
       </Text>
       <View style={styles.buttonRow}>
-        <Button title="Do košíku" onPress={() => addToCart(item)} />
-        <Button title="Do oblíbených" onPress={() => addToFavorites(item)} />
+        <Button title="Do košíku" onPress={() => handleAddToCart(item)} />
+        <Button title="Do oblíbených" onPress={() => handleAddToFavorites(item)} />
       </View>
     </View>
   );
